@@ -1,0 +1,5 @@
+name: Arcade
+author: Trae
+main: me.trae.clans.Arcade
+version: 1.0.0
+depend: [ ProtocolLib ]

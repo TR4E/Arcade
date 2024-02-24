@@ -1,5 +1,6 @@
 package me.trae.arcade;
 
+import me.trae.arcade.effect.EffectManager;
 import me.trae.arcade.game.GameManager;
 import me.trae.arcade.lobby.LobbyManager;
 import me.trae.arcade.scoreboard.ArcadeScoreboard;
@@ -50,6 +51,7 @@ public class Arcade extends SpigotPlugin {
         addManager(new UpdaterManager(this));
 
         // Arcade
+        addManager(new EffectManager(this));
         addManager(new GameManager(this));
         addManager(new LobbyManager(this));
     }

@@ -118,6 +118,11 @@ public class GameCommand extends Command<GameManager> {
                 return;
             }
 
+            if (game.getState() == null) {
+                UtilMessage.message(sender, "Game", "The game has not started yet.");
+                return;
+            }
+
             if (Arrays.asList(GameState.ENDING, GameState.ENDED).contains(game.getState())) {
                 UtilMessage.message(sender, "Game", "The game is already stopping.");
                 return;

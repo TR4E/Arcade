@@ -58,6 +58,11 @@ public class GameCommand extends Command<GameManager> {
                 return;
             }
 
+            if (this.getModule().getManager().getSelectedGame() == game) {
+                UtilMessage.message(sender, "Game", "That game has already been selected.");
+                return;
+            }
+
             this.getModule().getManager().setSelectedGame(game);
 
             UtilMessage.simpleBroadcast(null, "<white><bold><var> <aqua><bold>has changed the game to <white><bold><var>", Arrays.asList(sender.getName(), game.getName()), null);

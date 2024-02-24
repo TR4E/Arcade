@@ -78,7 +78,7 @@ public class Arcade extends SpigotPlugin {
         addFactory(new Champions() {
             @Override
             public boolean loadOnStart() {
-                return true;
+                return false;
             }
 
             @Override

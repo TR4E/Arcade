@@ -5,7 +5,7 @@ import me.trae.arcade.game.GameManager;
 import me.trae.arcade.game.data.GameData;
 import me.trae.arcade.game.data.GamePlayer;
 import me.trae.arcade.game.data.GameScoreboard;
-import me.trae.arcade.utility.UtilChampions;
+import me.trae.champions.Champions;
 
 public abstract class ChampionsGame<D extends GameData, P extends GamePlayer, S extends GameScoreboard> extends Game<D, P, S> {
 
@@ -17,13 +17,13 @@ public abstract class ChampionsGame<D extends GameData, P extends GamePlayer, S 
     public void start() {
         super.start();
 
-        UtilChampions.initialize();
+        this.getInstance().getFactoryByClass(Champions.class).initialize(this.getInstance());
     }
 
     @Override
     public void stop() {
         super.stop();
 
-        UtilChampions.shutdown();
+        this.getInstance().getFactoryByClass(Champions.class).shutdown(this.getInstance());
     }
 }

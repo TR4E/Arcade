@@ -118,9 +118,9 @@ public class GameCommand extends Command<GameManager> {
                 return;
             }
 
-            game.start();
+            game.stop();
 
-            UtilMessage.simpleBroadcast(null, "<white><bold><var> <aqua><bold>has started the game", Collections.singletonList(sender.getName()), null);
+            UtilMessage.simpleBroadcast(null, "<white><bold><var> <aqua><bold>has stopped the game", Collections.singletonList(sender.getName()), null);
         }
     }
 }

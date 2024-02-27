@@ -7,6 +7,7 @@ import me.trae.arcade.game.enums.GameState;
 import me.trae.arcade.game.interfaces.IGame;
 import me.trae.arcade.scoreboard.ArcadeScoreboard;
 import me.trae.core.framework.SpigotModule;
+import me.trae.core.framework.SpigotSubModule;
 import me.trae.core.scoreboard.ScoreboardManager;
 import me.trae.core.scoreboard.events.ScoreboardUpdateEvent;
 import me.trae.core.utility.UtilServer;
@@ -36,6 +37,18 @@ public abstract class Game<D extends GameData, P extends GamePlayer, S extends G
 
     @Override
     public void start() {
+        for (final Class<? extends SpigotSubModule<?>> subModuleClass : this.getSubModuleClasses()) {
+            try {
+                final SpigotSubModule<?> subModule = subModuleClass.getConstructor(Game.class).newInstance(this);
+
+                subModule.initializeFrame();
+
+                this.addSubModule(subModule);
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         this.getInstance().getManagerByClass(ScoreboardManager.class).setClassOfScoreboard(this.getClassOfScoreboard());
         UtilServer.getOnlinePlayers().forEach(player -> UtilServer.callEvent(new ScoreboardUpdateEvent(player)));
 
@@ -48,6 +61,15 @@ public abstract class Game<D extends GameData, P extends GamePlayer, S extends G
 
     @Override
     public void stop() {
+        this.getSubModules().values().removeIf(subModule -> {
+            if (this.getSubModuleClasses().contains(subModule.getClass())) {
+                subModule.shutdownFrame();
+                return true;
+            }
+
+            return false;
+        });
+
         this.setState(GameState.ENDING);
 
         this.onStop();

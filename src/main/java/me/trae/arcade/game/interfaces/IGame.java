@@ -25,7 +25,7 @@ public interface IGame<D extends GameData, P extends GamePlayer, S extends GameS
 
     void setState(final GameState gameState);
 
-    boolean isState(final GameState gameState);
+    boolean isAnyState(final GameState... gameStates);
 
     void start();
 

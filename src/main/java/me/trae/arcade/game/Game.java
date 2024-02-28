@@ -5,12 +5,12 @@ import me.trae.arcade.game.data.GamePlayer;
 import me.trae.arcade.game.data.GameScoreboard;
 import me.trae.arcade.game.enums.GameState;
 import me.trae.arcade.game.interfaces.IGame;
-import me.trae.arcade.scoreboard.ArcadeScoreboard;
 import me.trae.core.framework.SpigotModule;
 import me.trae.core.framework.SpigotSubModule;
-import me.trae.core.scoreboard.ScoreboardManager;
 import me.trae.core.scoreboard.events.ScoreboardUpdateEvent;
 import me.trae.core.utility.UtilServer;
+
+import java.util.Arrays;
 
 public abstract class Game<D extends GameData, P extends GamePlayer, S extends GameScoreboard> extends SpigotModule<GameManager> implements IGame<D, P, S> {
 
@@ -31,8 +31,8 @@ public abstract class Game<D extends GameData, P extends GamePlayer, S extends G
     }
 
     @Override
-    public boolean isState(final GameState gameState) {
-        return this.getState().equals(gameState);
+    public boolean isAnyState(final GameState... gameStates) {
+        return Arrays.asList(gameStates).contains(this.getState());
     }
 
     @Override
@@ -49,14 +49,14 @@ public abstract class Game<D extends GameData, P extends GamePlayer, S extends G
             }
         }
 
-        this.getInstance().getManagerByClass(ScoreboardManager.class).setClassOfScoreboard(this.getClassOfScoreboard());
-        UtilServer.getOnlinePlayers().forEach(player -> UtilServer.callEvent(new ScoreboardUpdateEvent(player)));
 
         this.setState(GameState.STARTING);
 
         this.onStart();
 
         this.setState(GameState.STARTED);
+
+        UtilServer.getOnlinePlayers().forEach(player -> UtilServer.callEvent(new ScoreboardUpdateEvent(player)));
     }
 
     @Override
@@ -76,7 +76,6 @@ public abstract class Game<D extends GameData, P extends GamePlayer, S extends G
 
         this.setState(GameState.ENDED);
 
-        this.getInstance().getManagerByClass(ScoreboardManager.class).setClassOfScoreboard(ArcadeScoreboard.class);
         UtilServer.getOnlinePlayers().forEach(player -> UtilServer.callEvent(new ScoreboardUpdateEvent(player)));
 
         this.setState(null);

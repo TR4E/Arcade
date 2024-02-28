@@ -1,6 +1,7 @@
 package me.trae.arcade;
 
 import me.trae.arcade.game.GameManager;
+import me.trae.arcade.gamer.GamerManager;
 import me.trae.arcade.lobby.LobbyManager;
 import me.trae.champions.Champions;
 import me.trae.champions.blood.BloodManager;
@@ -29,6 +30,7 @@ import me.trae.core.recharge.RechargeManager;
 import me.trae.core.redis.RedisManager;
 import me.trae.core.scoreboard.ScoreboardManager;
 import me.trae.core.server.ServerManager;
+import me.trae.core.teleport.TeleportManager;
 import me.trae.core.updater.UpdaterManager;
 import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.WorldManager;
@@ -38,7 +40,9 @@ public class Arcade extends SpigotPlugin {
     @Override
     public void registerManagers() {
         addManager(new GameManager(this));
+        addManager(new GamerManager(this));
         addManager(new LobbyManager(this));
+        addManager(new ScoreboardManager(this));
     }
 
     @Override
@@ -69,8 +73,9 @@ public class Arcade extends SpigotPlugin {
                 addManager(PlayerManager.class);
                 addManager(RechargeManager.class);
                 addManager(RedisManager.class);
-                addManager(ScoreboardManager.class);
+                addManager(me.trae.core.scoreboard.ScoreboardManager.class);
                 addManager(ServerManager.class);
+                addManager(TeleportManager.class);
                 addManager(UpdaterManager.class);
                 addManager(WeaponManager.class);
                 addManager(WorldManager.class);

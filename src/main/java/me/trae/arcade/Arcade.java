@@ -9,6 +9,7 @@ import me.trae.champions.build.BuildManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.core.Core;
+import me.trae.core.blockrestore.BlockRestoreManager;
 import me.trae.core.chat.ChatManager;
 import me.trae.core.client.ClientManager;
 import me.trae.core.command.CommandManager;
@@ -56,6 +57,7 @@ public class Arcade extends SpigotPlugin {
 
             @Override
             public void registerManagers() {
+                addManager(BlockRestoreManager.class);
                 addManager(ChatManager.class);
                 addManager(ClientManager.class);
                 addManager(CommandManager.class);
